@@ -202,12 +202,12 @@ abgeschlossen und (wo möglich) verifizierbar.
 - [x] Verifikation: Unit-Tests (`graph.spec.ts`) — Zyklus erkannt, Ready korrekt.
 
 ### Schritt 4 — Simulierter Berechnungs-Service
-- [ ] `compute.ts` (Klasse `Compute`): simuliert eine Berechnung über eine
+- [x] `compute.ts` (Klasse `Compute`): simuliert eine Berechnung über eine
       Wartezeit (RxJS `timer`/`delay`), gibt ein `Observable<Result>` zurück.
-- [ ] Dauer **pro Modul** konfigurierbar (Parameter/Config je Modul).
-- [ ] Optional Fehler simulierbar (für Fehler-/Retry-Tests).
-- [ ] Interface so, dass später ein echtes .NET-HTTP-Backend die Klasse ersetzt.
-- [ ] Verifikation: unterschiedliche Modul-Dauern messbar/testbar (Fake-Timer).
+- [x] Dauer **pro Modul** konfigurierbar (Parameter/Config je Modul).
+- [x] Optional Fehler simulierbar (für Fehler-/Retry-Tests).
+- [x] Interface so, dass später ein echtes .NET-HTTP-Backend die Klasse ersetzt.
+- [x] Verifikation: unterschiedliche Modul-Dauern messbar/testbar (Fake-Timer).
 
 ### Schritt 5 — Orchestrator (Kern)
 - [ ] `orchestrator.ts` (Klasse `Orchestrator`), Injection via `inject()`.
