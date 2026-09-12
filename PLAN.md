@@ -239,9 +239,9 @@ abgeschlossen und (wo möglich) verifizierbar.
       (folgt mit Schritt 8, da noch keine Seite die Komponente einbindet).
 
 ### Schritt 8 — Demo-Seite
-- [ ] Einstiegs-Komponente mit "Start"-Button → `orchestrator.run()`.
-- [ ] Status-UI einbinden; Fortschritt sichtbar.
-- [ ] Verifikation: Ende-zu-Ende-Durchlauf im Browser (mit Mock-Backend).
+- [x] Einstiegs-Komponente mit "Start"-Button → `orchestrator.run()`.
+- [x] Status-UI einbinden; Fortschritt sichtbar.
+- [x] Verifikation: Ende-zu-Ende-Durchlauf im Browser (mit Mock-Backend).
 
 ### Schritt 9 — Abschluss
 - [ ] `ng build` sauber, alle Unit-Tests grün.
