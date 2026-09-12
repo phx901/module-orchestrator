@@ -65,11 +65,10 @@ die Reihenfolge angewiesen war.
   - `execute(inputs: Partial<Record<ModuleId, Result>>)` — die `inputs` enthalten
     die Ergebnisse der `dependsOn`-Module; `Partial<Record<...>>` macht die Nutzung
     typsicher, aber optional.
-- `ModuleState`: `{ status, result?, error?, message?, info?, startedAt?, finishedAt? }`.
-  - `message?`: kurze Status-/Erfolgsnachricht für den Knoten-Kopfbereich.
-  - `error?`: Fehlermeldung bei `Failed`.
-  - `info?`: modulspezifische Zusatzinformationen für den Knoten-Infobereich
-    (frei strukturierbar pro Modul).
+- `ModuleState`: `{ status, result?, startedAt?, finishedAt? }`.
+  - `result?`: `Result` (`status: 'ok' | 'warning' | 'error'`, `message?`, `value?`)
+    — sowohl für den Knoten-Kopfbereich (Status/Nachricht) als auch für den
+    Infobereich (`value`) und für technische wie fachliche Fehler.
 - Zentraler Result-Store: `Map<ModuleId, Result>` — einzige Quelle für Modul-Outputs.
 
 ## Ausführungslogik
@@ -117,7 +116,8 @@ Benennung nach aktuellem Angular Style Guide (v20+): **kein** `.service`/`.compo
 Suffix, Bindestriche, Dateiname = Klassenname, Organisation nach Feature/Thema.
 - `src/app/core/orchestrator/orchestrator.ts` — zentrale Steuerung (Klasse `Orchestrator`)
 - `src/app/core/orchestrator/graph.ts` — Zyklus-Erkennung, Ready-Ermittlung (reine Funktionen)
-- `src/app/core/orchestrator/orchestrator-types.ts` — Modelle/Typen
+- `src/app/core/orchestrator/module-definition.ts` — `ModuleId`, `ModuleStatus`, `ModuleState`, `ModuleDefinition`
+- `src/app/core/orchestrator/result.ts` — `Result`, `ResultStatus`
 - `src/app/core/backend/backend.ts` — HTTP-Schicht zum .NET-Backend (Klasse `Backend`)
 - `src/app/modules/*` — konkrete Berechnungsmodule (Backend-Calls)
 - `src/app/ui/orchestrator-status/orchestrator-status.{ts,html,css}` — Status-UI (Graph)
@@ -188,10 +188,11 @@ abgeschlossen und (wo möglich) verifizierbar.
 - [x] Verifikation: `ng serve` startet, Default-App lädt.
 
 ### Schritt 2 — Domain-Modelle
-- [ ] `orchestrator-types.ts`: `ModuleId`, `ModuleStatus` (Pending/Ready/Running/
-      Completed/Failed/Blocked), `Result`, `ModuleState`, `ModuleDefinition`.
-- [ ] `execute(inputs: Partial<Record<ModuleId, Result>>): Observable<Result>`.
-- [ ] Verifikation: kompiliert ohne Fehler.
+- [x] `module-definition.ts`: `ModuleId`, `ModuleStatus` (Pending/Ready/Running/
+      Completed/Failed/Blocked), `ModuleState`, `ModuleDefinition`.
+- [x] `result.ts`: `Result`, `ResultStatus` (`ok`/`warning`/`error`).
+- [x] `execute(inputs: Partial<Record<ModuleId, Result>>): Observable<Result>`.
+- [x] Verifikation: kompiliert ohne Fehler.
 
 ### Schritt 3 — Graph-Utilities (rein, testbar)
 - [ ] `graph.ts`: `detectCycle(defs)`, `validateGraph(defs)` (fehlende deps).
@@ -222,7 +223,7 @@ abgeschlossen und (wo möglich) verifizierbar.
 
 ### Schritt 6 — Beispiel-Module A–E
 - [ ] Je eine `ModuleDefinition` mit `dependsOn` gemäß Beispielgraph.
-- [ ] `execute()` ruft `Backend`, mappt Response auf `Result` + `info`.
+- [ ] `execute()` ruft `Backend`, mappt Response auf `Result` (`value` = modulspezifische Zusatzinfo).
 - [ ] Zentrale Registrierung (Liste aller Definitionen).
 - [ ] Verifikation: Orchestrator läuft mit gemockten Backend-Responses durch.
 
@@ -230,7 +231,7 @@ abgeschlossen und (wo möglich) verifizierbar.
 - [ ] `orchestrator-status`-Komponente: liest Signals reaktiv, rendert Knoten +
       SVG-Pfeile nach `dependsOn`.
 - [ ] `module-node`-Komponente: Kopfbereich (Name, Status-Farbe, Nachricht) +
-      abgetrennter Infobereich (`info`) + Retry-Button bei `Failed`.
+      abgetrennter Infobereich (`result.value`) + Retry-Button bei `Failed`.
 - [ ] Verifikation: Statuswechsel/Nachrichten erscheinen live im Browser.
 
 ### Schritt 8 — Demo-Seite
