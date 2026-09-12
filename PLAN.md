@@ -231,11 +231,12 @@ abgeschlossen und (wo möglich) verifizierbar.
 - [x] Verifikation: Orchestrator läuft mit den simulierten Zeiten durch.
 
 ### Schritt 7 — Status-UI (Graph)
-- [ ] `orchestrator-status`-Komponente: liest Signals reaktiv, rendert Knoten +
+- [x] `orchestrator-status`-Komponente: liest Signals reaktiv, rendert Knoten +
       SVG-Pfeile nach `dependsOn`.
-- [ ] `module-node`-Komponente: Kopfbereich (Name, Status-Farbe, Nachricht) +
+- [x] `module-node`-Komponente: Kopfbereich (Name, Status-Farbe, Nachricht) +
       abgetrennter Infobereich (`result.value`) + Retry-Button bei `Failed`.
-- [ ] Verifikation: Statuswechsel/Nachrichten erscheinen live im Browser.
+- [ ] Verifikation: Statuswechsel/Nachrichten erscheinen live im Browser
+      (folgt mit Schritt 8, da noch keine Seite die Komponente einbindet).
 
 ### Schritt 8 — Demo-Seite
 - [ ] Einstiegs-Komponente mit "Start"-Button → `orchestrator.run()`.

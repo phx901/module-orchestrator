@@ -15,6 +15,7 @@ export class Orchestrator {
 
   readonly states = this._states.asReadonly();
   readonly results = this._results.asReadonly();
+  readonly defs = this._defs.asReadonly();
 
   readonly overallProgress = computed(() => {
     const states = [...this._states().values()];
