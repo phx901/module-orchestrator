@@ -210,17 +210,17 @@ abgeschlossen und (wo möglich) verifizierbar.
 - [x] Verifikation: unterschiedliche Modul-Dauern messbar/testbar (Fake-Timer).
 
 ### Schritt 5 — Orchestrator (Kern)
-- [ ] `orchestrator.ts` (Klasse `Orchestrator`), Injection via `inject()`.
-- [ ] Signals: `states = signal<Map<ModuleId, ModuleState>>`, `results`.
-- [ ] `computed()`: `overallProgress`, `hasFailures`, `runningCount`.
-- [ ] `register(defs)` + Graph-Validierung (nutzt Schritt 3).
-- [ ] `run()`: reset → Wurzel-Module starten.
-- [ ] `mergeMap`-Pipeline: Modul starten (`Running`), `inputs` aus Result-Store
+- [x] `orchestrator.ts` (Klasse `Orchestrator`), Injection via `inject()`.
+- [x] Signals: `states = signal<Map<ModuleId, ModuleState>>`, `results`.
+- [x] `computed()`: `overallProgress`, `hasFailures`, `runningCount`.
+- [x] `register(defs)` + Graph-Validierung (nutzt Schritt 3).
+- [x] `run()`: reset → Wurzel-Module starten.
+- [x] `mergeMap`-Pipeline: Modul starten (`Running`), `inputs` aus Result-Store
       sammeln, `execute()` abonnieren.
-- [ ] Completion-Handler: Result speichern, `Completed`, Ready-Prüfung (idempotent).
-- [ ] Error-Handler: `Failed`, Nachfolger transitiv `Blocked`.
-- [ ] `retry(id)`: Modul neu starten, bei Erfolg Nachfolger auf `Pending` + weiter.
-- [ ] Verifikation: Unit-Tests `orchestrator.spec.ts` (Beispielgraph-Reihenfolge,
+- [x] Completion-Handler: Result speichern, `Completed`, Ready-Prüfung (idempotent).
+- [x] Error-Handler: `Failed`, Nachfolger transitiv `Blocked`.
+- [x] `retry(id)`: Modul neu starten, bei Erfolg Nachfolger auf `Pending` + weiter.
+- [x] Verifikation: Unit-Tests `orchestrator.spec.ts` (Beispielgraph-Reihenfolge,
       Parallelität B/C, Fehler-Isolation, Retry-Kette, kein Doppel-Trigger von E).
 
 ### Schritt 6 — Beispiel-Module A–E
