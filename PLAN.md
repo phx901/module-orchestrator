@@ -183,9 +183,9 @@ Kleine, nacheinander abarbeitbare Schritte. Jeder Schritt ist für sich
 abgeschlossen und (wo möglich) verifizierbar.
 
 ### Schritt 1 — Scaffold
-- [ ] `ng new` im Workspace (standalone, strict, routing optional, plain CSS).
-- [ ] Ordner anlegen: `core/orchestrator`, `core/backend`, `modules`, `ui`.
-- [ ] Verifikation: `ng serve` startet, Default-App lädt.
+- [x] `ng new` im Workspace (standalone, strict, routing optional, plain CSS).
+- [x] Ordner anlegen: `core/orchestrator`, `core/backend`, `modules`, `ui`.
+- [x] Verifikation: `ng serve` startet, Default-App lädt.
 
 ### Schritt 2 — Domain-Modelle
 - [ ] `orchestrator-types.ts`: `ModuleId`, `ModuleStatus` (Pending/Ready/Running/
