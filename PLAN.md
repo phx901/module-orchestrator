@@ -224,11 +224,11 @@ abgeschlossen und (wo möglich) verifizierbar.
       Parallelität B/C, Fehler-Isolation, Retry-Kette, kein Doppel-Trigger von E).
 
 ### Schritt 6 — Beispiel-Module A–E
-- [ ] Je eine `ModuleDefinition` mit `dependsOn` gemäß Beispielgraph.
-- [ ] `execute()` ruft `Compute` mit modulspezifischer Wartezeit, mappt auf
+- [x] Je eine `ModuleDefinition` mit `dependsOn` gemäß Beispielgraph.
+- [x] `execute()` ruft `Compute` mit modulspezifischer Wartezeit, mappt auf
       `Result` (`value` = modulspezifische Zusatzinfo).
-- [ ] Zentrale Registrierung (Liste aller Definitionen).
-- [ ] Verifikation: Orchestrator läuft mit den simulierten Zeiten durch.
+- [x] Zentrale Registrierung (Liste aller Definitionen).
+- [x] Verifikation: Orchestrator läuft mit den simulierten Zeiten durch.
 
 ### Schritt 7 — Status-UI (Graph)
 - [ ] `orchestrator-status`-Komponente: liest Signals reaktiv, rendert Knoten +
