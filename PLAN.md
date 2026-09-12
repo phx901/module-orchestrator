@@ -244,5 +244,5 @@ abgeschlossen und (wo möglich) verifizierbar.
 - [x] Verifikation: Ende-zu-Ende-Durchlauf im Browser (mit Mock-Backend).
 
 ### Schritt 9 — Abschluss
-- [ ] `ng build` sauber, alle Unit-Tests grün.
-- [ ] Kurz-README: Start, Modul hinzufügen, Backend-URL konfigurieren.
+- [x] `ng build` sauber, alle Unit-Tests grün.
+- [x] Kurz-README: Start, Modul hinzufügen, Backend-URL konfigurieren.
