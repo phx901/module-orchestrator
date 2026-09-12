@@ -2,9 +2,11 @@
 
 ## Kontext
 - Neues Angular-Projekt (Workspace aktuell leer, nur README + git).
-- Berechnungsmodule laufen async und rufen jeweils einen .NET-Backend-Service (HTTP) auf.
-  Die HTTP-Calls laufen über eine dünne Backend-Service-Schicht mit Base-URL aus
-  `environment`, damit Module isoliert mockbar/testbar bleiben.
+- Berechnungsmodule laufen async. **Vorerst kein echtes Backend:** jedes Modul
+  nutzt einen simulierten Service, der eine Berechnung über eine Wartezeit
+  nachbildet (z.B. via RxJS `timer`/`delay`). Die simulierte Dauer ist **pro Modul
+  unterschiedlich** konfigurierbar. Ein echtes .NET-HTTP-Backend kommt später und
+  ersetzt nur diese Service-Schicht (Interface bleibt gleich).
 - Ergebnisse fließen zentral über den Orchestrator: `Map<ModuleId, Result>`.
   Nachfolger-Module bekommen die Outputs ihrer Abhängigkeiten als Input.
 - Fehlerverhalten: fehlerhaftes Modul → Fehlerstatus, muss manuell re-triggert werden.
@@ -22,7 +24,6 @@ aktuellen APIs und Best Practices:
 - **`inject()`** statt Constructor-Injection.
 - **Neue Control-Flow-Syntax** im Template: `@if`, `@for`, `@switch` (nicht
   `*ngIf`/`*ngFor`).
-- **`provideHttpClient()`** (funktionale Provider) statt `HttpClientModule`.
 - **`ChangeDetectionStrategy.OnPush`** als Standard; `class`/`style`-Bindings
   statt `ngClass`/`ngStyle`.
 - **`protected`** für nur-im-Template genutzte Member, **`readonly`** für von
@@ -99,8 +100,8 @@ die Reihenfolge angewiesen war.
    `getReadyModules(states)`. Reine, testbare Funktionen.
 4. **Orchestrator** — State-Verwaltung via Angular Signals,
    `run()`, Completion-Handling, Result-Store, Fehler-Isolation, `retry(id)`.
-5. **Beispiel-Module A–E** — je mit `HttpClient`-Call an .NET (über die Backend-
-   Service-Schicht, mockbar), verdrahtet gemäß Beispielgraph.
+5. **Beispiel-Module A–E** — je mit simuliertem Service (unterschiedliche
+   Wartezeit pro Modul), verdrahtet gemäß Beispielgraph.
 6. **Status-UI (Graph-Visualisierung)** — Module als Knoten, Abhängigkeiten als
    Pfeile. Jeder Knoten zeigt: Modulname, aktuellen Status (Wartet / Läuft /
    Erfolgreich / Fehler), bei Fehler die Fehlermeldung, plus modulspezifische
@@ -118,12 +119,11 @@ Suffix, Bindestriche, Dateiname = Klassenname, Organisation nach Feature/Thema.
 - `src/app/core/orchestrator/graph.ts` — Zyklus-Erkennung, Ready-Ermittlung (reine Funktionen)
 - `src/app/core/orchestrator/module-definition.ts` — `ModuleId`, `ModuleStatus`, `ModuleState`, `ModuleDefinition`
 - `src/app/core/orchestrator/result.ts` — `Result`, `ResultStatus`
-- `src/app/core/backend/backend.ts` — HTTP-Schicht zum .NET-Backend (Klasse `Backend`)
-- `src/app/modules/*` — konkrete Berechnungsmodule (Backend-Calls)
+- `src/app/core/compute/compute.ts` — simulierter Berechnungs-Service (Wartezeit pro Modul; später .NET-HTTP)
+- `src/app/modules/*` — konkrete Berechnungsmodule (nutzen den simulierten Service)
 - `src/app/ui/orchestrator-status/orchestrator-status.{ts,html,css}` — Status-UI (Graph)
 - `src/app/ui/orchestrator-status/module-node/module-node.{ts,html,css}` — einzelner Knoten
 - Tests liegen daneben als `*.spec.ts` (z.B. `graph.spec.ts`, `orchestrator.spec.ts`).
-- `src/environments/*` — Backend-Base-URL
 
 ## Verifikation
 1. `ng build` läuft fehlerfrei.
@@ -195,17 +195,19 @@ abgeschlossen und (wo möglich) verifizierbar.
 - [x] Verifikation: kompiliert ohne Fehler.
 
 ### Schritt 3 — Graph-Utilities (rein, testbar)
-- [ ] `graph.ts`: `detectCycle(defs)`, `validateGraph(defs)` (fehlende deps).
-- [ ] `getReadyModules(defs, states)`: liefert `Pending`-Module mit allen deps
+- [x] `graph.ts`: `detectCycle(defs)`, `validateGraph(defs)` (fehlende deps).
+- [x] `getReadyModules(defs, states)`: liefert `Pending`-Module mit allen deps
       auf `Completed`.
-- [ ] `getDependents(id, defs)` (transitiv) für Blocking/Unblocking.
-- [ ] Verifikation: Unit-Tests (`graph.spec.ts`) — Zyklus erkannt, Ready korrekt.
+- [x] `getDependents(id, defs)` (transitiv) für Blocking/Unblocking.
+- [x] Verifikation: Unit-Tests (`graph.spec.ts`) — Zyklus erkannt, Ready korrekt.
 
-### Schritt 4 — Backend-Service-Schicht
-- [ ] `backend.ts` (Klasse `Backend`): dünner Wrapper um `HttpClient`, Base-URL
-      aus `environment`.
-- [ ] Eine Methode pro Modul-Endpoint (oder generisch `compute(module, payload)`).
-- [ ] Verifikation: mit `HttpTestingController` mockbar.
+### Schritt 4 — Simulierter Berechnungs-Service
+- [ ] `compute.ts` (Klasse `Compute`): simuliert eine Berechnung über eine
+      Wartezeit (RxJS `timer`/`delay`), gibt ein `Observable<Result>` zurück.
+- [ ] Dauer **pro Modul** konfigurierbar (Parameter/Config je Modul).
+- [ ] Optional Fehler simulierbar (für Fehler-/Retry-Tests).
+- [ ] Interface so, dass später ein echtes .NET-HTTP-Backend die Klasse ersetzt.
+- [ ] Verifikation: unterschiedliche Modul-Dauern messbar/testbar (Fake-Timer).
 
 ### Schritt 5 — Orchestrator (Kern)
 - [ ] `orchestrator.ts` (Klasse `Orchestrator`), Injection via `inject()`.
@@ -223,9 +225,10 @@ abgeschlossen und (wo möglich) verifizierbar.
 
 ### Schritt 6 — Beispiel-Module A–E
 - [ ] Je eine `ModuleDefinition` mit `dependsOn` gemäß Beispielgraph.
-- [ ] `execute()` ruft `Backend`, mappt Response auf `Result` (`value` = modulspezifische Zusatzinfo).
+- [ ] `execute()` ruft `Compute` mit modulspezifischer Wartezeit, mappt auf
+      `Result` (`value` = modulspezifische Zusatzinfo).
 - [ ] Zentrale Registrierung (Liste aller Definitionen).
-- [ ] Verifikation: Orchestrator läuft mit gemockten Backend-Responses durch.
+- [ ] Verifikation: Orchestrator läuft mit den simulierten Zeiten durch.
 
 ### Schritt 7 — Status-UI (Graph)
 - [ ] `orchestrator-status`-Komponente: liest Signals reaktiv, rendert Knoten +
