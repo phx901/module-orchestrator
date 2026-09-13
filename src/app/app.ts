@@ -3,9 +3,10 @@ import { Compute } from './module/compute/compute';
 import { Orchestrator } from './orchestrator/orchestrator';
 import { createExampleModules } from './module/demo/example-modules';
 import { OrchestratorGraph } from './orchestrator/orchestrator-graph/orchestrator-graph';
+import { Button } from './ui/button/button';
 
 @Component({
-  imports: [OrchestratorGraph],
+  imports: [OrchestratorGraph, Button],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
