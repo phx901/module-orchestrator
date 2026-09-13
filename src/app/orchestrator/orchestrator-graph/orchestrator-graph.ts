@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { ModuleDefinition, ModuleId } from '../../core/orchestrator/module-types';
-import { Orchestrator } from '../../core/orchestrator/orchestrator';
-import { ModuleNode } from './module-node/module-node';
+import { ModuleDefinition, ModuleId } from '../../module/module-definition';
+import { Orchestrator } from '../orchestrator';
+import { ModuleCard } from '../../module/module-card/module-card';
 
 const NODE_WIDTH = 200;
 const NODE_HEIGHT = 96;
@@ -100,13 +100,13 @@ function computeLayout(defs: ModuleDefinition[]): GraphLayout {
 }
 
 @Component({
-  selector: 'app-orchestrator-status',
-  imports: [ModuleNode],
-  templateUrl: './orchestrator-status.html',
-  styleUrl: './orchestrator-status.css',
+  selector: 'app-orchestrator-graph',
+  imports: [ModuleCard],
+  templateUrl: './orchestrator-graph.html',
+  styleUrl: './orchestrator-graph.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrchestratorStatus {
+export class OrchestratorGraph {
   private readonly orchestrator = inject(Orchestrator);
 
   protected readonly states = this.orchestrator.states;

@@ -26,7 +26,7 @@
 
   @for (node of layout().nodes; track node.id) {
     <div class="node-wrapper" [style.left.px]="node.x" [style.top.px]="node.y">
-      <app-module-node [id]="node.id" [state]="states().get(node.id)" (retry)="retry($event)" />
+      <app-module-card [id]="node.id" [state]="states().get(node.id)" (retry)="retry($event)" />
     </div>
   }
 </div>

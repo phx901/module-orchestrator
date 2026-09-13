@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Compute } from './core/compute/compute';
-import { Orchestrator } from './core/orchestrator/orchestrator';
-import { createExampleModules } from './modules/example-modules';
-import { OrchestratorStatus } from './ui/orchestrator-status/orchestrator-status';
+import { Compute } from './module/compute/compute';
+import { Orchestrator } from './orchestrator/orchestrator';
+import { createExampleModules } from './module/demo/example-modules';
+import { OrchestratorGraph } from './orchestrator/orchestrator-graph/orchestrator-graph';
 
 @Component({
-  imports: [OrchestratorStatus],
+  imports: [OrchestratorGraph],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',

@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { Observable, of, throwError, timer } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { ModuleDefinition, ModuleId } from './module-types';
+import { ModuleDefinition, ModuleId } from '../module/module-definition';
 import { Orchestrator } from './orchestrator';
-import { Result } from './result';
+import { Result } from '../module/result';
 
 function makeDef(
   id: ModuleId,

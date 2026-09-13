@@ -1,4 +1,5 @@
-import { ModuleDefinition, ModuleId, ModuleState } from './module-types';
+import { ModuleState } from '../module/module-state';
+import { ModuleDefinition, ModuleId } from '../module/module-definition';
 
 export function detectCycle(defs: ModuleDefinition[]): ModuleId[] | null {
   const byId = new Map(defs.map((def) => [def.id, def]));

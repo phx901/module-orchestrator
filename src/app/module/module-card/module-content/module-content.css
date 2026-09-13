@@ -1,0 +1,35 @@
+:host {
+  display: block;
+}
+
+.message {
+  margin: 0 10px 8px;
+  font-size: 0.8rem;
+  color: #475569;
+}
+
+.retry {
+  margin: 0 10px 8px;
+  padding: 4px 8px;
+  border: 1px solid var(--color-failed);
+  background: #ffffff;
+  color: var(--color-failed);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.separator {
+  border-top: 1px solid #e2e8f0;
+}
+
+.info {
+  padding: 8px 10px;
+  color: #334155;
+  font-size: 0.8rem;
+  word-break: break-word;
+}
+
+.info-empty {
+  color: #94a3b8;
+}

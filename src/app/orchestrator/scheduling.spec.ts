@@ -1,7 +1,8 @@
 import { of } from 'rxjs';
-import { detectCycle, getDependents, getReadyModules, validateGraph } from './graph';
-import { ModuleDefinition, ModuleId, ModuleState } from './module-types';
-import { Result } from './result';
+import { detectCycle, getDependents, getReadyModules, validateGraph } from './scheduling';
+import { ModuleState } from '../module/module-state';
+import { ModuleDefinition, ModuleId } from '../module/module-definition';
+import { Result } from '../module/result';
 
 function makeDef(id: ModuleId, dependsOn: ModuleId[] = []): ModuleDefinition {
   return {

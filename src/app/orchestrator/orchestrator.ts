@@ -1,9 +1,10 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { EMPTY, Observable, Subject } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
-import { getDependents, getReadyModules, validateGraph } from './graph';
-import { ModuleDefinition, ModuleId, ModuleState } from './module-types';
-import { Result } from './result';
+import { getDependents, getReadyModules, validateGraph } from './scheduling';
+import { ModuleState } from '../module/module-state';
+import { ModuleDefinition, ModuleId } from '../module/module-definition';
+import { Result } from '../module/result';
 
 @Injectable({ providedIn: 'root' })
 export class Orchestrator {

@@ -1,0 +1,14 @@
+@if (message()) {
+  <p class="message">{{ message() }}</p>
+}
+@if (isFailed()) {
+  <button type="button" class="retry" (click)="onRetry()">Retry</button>
+}
+<div class="separator"></div>
+<div class="info">
+  @if (value() !== undefined) {
+    <span>{{ value() }}</span>
+  } @else {
+    <span class="info-empty">–</span>
+  }
+</div>

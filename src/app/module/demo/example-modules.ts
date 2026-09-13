@@ -1,5 +1,5 @@
-import { Compute } from '../core/compute/compute';
-import { ModuleDefinition } from '../core/orchestrator/module-types';
+import { Compute } from '../compute/compute';
+import { ModuleDefinition } from '../module-definition';
 import { createModuleA } from './module-a';
 import { createModuleB } from './module-b';
 import { createModuleC } from './module-c';
