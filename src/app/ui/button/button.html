@@ -1,7 +1,12 @@
 <button
   type="button"
-  class="px-4 py-2 rounded cursor-pointer border border-primary bg-primary text-on-primary disabled:opacity-50"
+  class="{{ classes() }}"
   [disabled]="disabled()"
 >
-  {{ label() }}
+  @if (icon(); as iconName) {
+    <app-icon [name]="iconName" />
+  }
+  @if (label(); as labelText) {
+    <span>{{ labelText }}</span>
+  }
 </button>

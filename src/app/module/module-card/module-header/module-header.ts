@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { ModuleId } from '../../module-definition';
 import { ModuleStatus } from '../../module-state';
+import { Button } from '../../../ui/button/button';
 import { STATUS_CLASSES, STATUS_LABELS } from './module-status-display';
 
 @Component({
   selector: 'app-module-header',
+  imports: [Button],
   templateUrl: './module-header.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
