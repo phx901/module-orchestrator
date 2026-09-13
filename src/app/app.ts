@@ -8,7 +8,6 @@ import { Button } from './ui/button/button';
 @Component({
   imports: [OrchestratorGraph, Button],
   selector: 'app-root',
-  styleUrl: './app.css',
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

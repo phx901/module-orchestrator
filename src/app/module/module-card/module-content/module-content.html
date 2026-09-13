@@ -1,14 +1,14 @@
 @if (message()) {
-  <p class="message">{{ message() }}</p>
+  <p class="mx-2.5 mb-2 text-xs text-text-muted">{{ message() }}</p>
 }
 @if (isFailed()) {
-  <button type="button" class="retry" (click)="onRetry()">Retry</button>
+  <button type="button" class="mx-2.5 mb-2 px-2 py-1 border border-error bg-background text-error rounded cursor-pointer text-xs" (click)="onRetry()">Retry</button>
 }
-<div class="separator"></div>
-<div class="info">
+<div class="border-t border-border-light"></div>
+<div class="px-2.5 py-2 text-xs text-text break-words">
   @if (value() !== undefined) {
     <span>{{ value() }}</span>
   } @else {
-    <span class="info-empty">–</span>
+    <span class="text-text-faint">–</span>
   }
 </div>

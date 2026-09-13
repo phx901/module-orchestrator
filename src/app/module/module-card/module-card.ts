@@ -8,7 +8,6 @@ import { ModuleContent } from './module-content/module-content';
   selector: 'app-module-card',
   imports: [ModuleHeader, ModuleContent],
   templateUrl: './module-card.html',
-  styleUrl: './module-card.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModuleCard {

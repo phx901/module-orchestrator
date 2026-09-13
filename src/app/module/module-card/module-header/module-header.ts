@@ -6,7 +6,6 @@ import { STATUS_CLASSES, STATUS_LABELS } from './module-status-display';
 @Component({
   selector: 'app-module-header',
   templateUrl: './module-header.html',
-  styleUrl: './module-header.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModuleHeader {

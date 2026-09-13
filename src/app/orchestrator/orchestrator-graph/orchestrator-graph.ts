@@ -103,7 +103,6 @@ function computeLayout(defs: ModuleDefinition[]): GraphLayout {
   selector: 'app-orchestrator-graph',
   imports: [ModuleCard],
   templateUrl: './orchestrator-graph.html',
-  styleUrl: './orchestrator-graph.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrchestratorGraph {

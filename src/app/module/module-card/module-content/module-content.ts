@@ -5,7 +5,6 @@ import { ModuleState } from '../../module-state';
 @Component({
   selector: 'app-module-content',
   templateUrl: './module-content.html',
-  styleUrl: './module-content.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModuleContent {

@@ -9,9 +9,9 @@ export const STATUS_LABELS: Record<ModuleStatus, string> = {
 };
 
 export const STATUS_CLASSES: Record<ModuleStatus, string> = {
-  Pending: 'status-pending',
-  Blocked: 'status-pending',
-  Running: 'status-running',
-  Completed: 'status-completed',
-  Failed: 'status-failed',
+  Pending: 'border-l-neutral text-neutral',
+  Blocked: 'border-l-neutral text-neutral',
+  Running: 'border-l-primary-light text-primary-light',
+  Completed: 'border-l-success text-success',
+  Failed: 'border-l-error text-error',
 };
