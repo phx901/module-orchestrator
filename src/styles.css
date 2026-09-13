@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-primary: #141e8c;
+  --color-primary-dark: color-mix(in srgb, var(--color-primary) 80%, black);
+  --color-primary-light: color-mix(in srgb, var(--color-primary) 80%, white);
+
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+  --color-neutral: #64748b;
+  --color-text: #334155;
+  --color-text-muted: var(--color-neutral);
+  --color-text-faint: color-mix(in srgb, var(--color-neutral) 70%, white);
+  --color-border: color-mix(in srgb, var(--color-neutral) 35%, white);
+  --color-border-light: color-mix(in srgb, var(--color-neutral) 20%, white);
+  --color-background: #ffffff;
+  --color-on-primary: #ffffff;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+}

@@ -5,14 +5,14 @@
 .message {
   margin: 0 10px 8px;
   font-size: 0.8rem;
-  color: #475569;
+  color: var(--color-text-muted);
 }
 
 .retry {
   margin: 0 10px 8px;
   padding: 4px 8px;
   border: 1px solid var(--color-failed);
-  background: #ffffff;
+  background: var(--color-background);
   color: var(--color-failed);
   border-radius: 4px;
   cursor: pointer;
@@ -20,16 +20,16 @@
 }
 
 .separator {
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--color-border-light);
 }
 
 .info {
   padding: 8px 10px;
-  color: #334155;
+  color: var(--color-text);
   font-size: 0.8rem;
   word-break: break-word;
 }
 
 .info-empty {
-  color: #94a3b8;
+  color: var(--color-text-faint);
 }

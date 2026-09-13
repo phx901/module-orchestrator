@@ -10,7 +10,7 @@
 }
 
 .edges line {
-  stroke: #94a3b8;
+  stroke: var(--color-text-faint);
   stroke-width: 2;
 }
 
