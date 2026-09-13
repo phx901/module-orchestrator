@@ -4,11 +4,11 @@ import { ModuleDefinition } from '../module-definition';
 export function createModuleD(compute: Compute): ModuleDefinition {
   return {
     id: 'D',
-    dependsOn: ['C'],
+    dependsOn: ['B'],
     execute: (inputs) =>
       compute.run({
         durationMs: 1000,
-        result: { status: 'ok', value: `D-data(${inputs['C']?.value})` },
+        result: { status: 'ok', value: `D-data(${inputs['B']?.value})` },
       }),
   };
 }

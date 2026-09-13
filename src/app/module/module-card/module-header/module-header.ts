@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { ModuleId } from '../../module-definition';
 import { ModuleStatus } from '../../module-state';
 import { STATUS_CLASSES, STATUS_LABELS } from './module-status-display';
@@ -11,7 +11,13 @@ import { STATUS_CLASSES, STATUS_LABELS } from './module-status-display';
 export class ModuleHeader {
   readonly id = input.required<ModuleId>();
   readonly status = input.required<ModuleStatus>();
+  readonly retry = output<ModuleId>();
 
   protected readonly statusLabel = computed(() => STATUS_LABELS[this.status()]);
   protected readonly statusClass = computed(() => STATUS_CLASSES[this.status()]);
+  protected readonly isFailed = computed(() => this.status() === 'Failed');
+
+  protected onRetry(): void {
+    this.retry.emit(this.id());
+  }
 }
