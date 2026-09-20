@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Observable, of, throwError, timer } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { ModuleDefinition, ModuleId } from '../module/module-definition';
+import { Module, ModuleId } from '../module/module';
 import { Orchestrator } from './orchestrator';
 import { Result } from '../module/result';
 
@@ -9,7 +9,7 @@ function makeDef(
   id: ModuleId,
   dependsOn: ModuleId[],
   options: { durationMs?: number; failWith?: string } = {},
-): ModuleDefinition {
+): Module {
   const durationMs = options.durationMs ?? 0;
   return {
     id,
@@ -39,14 +39,14 @@ describe('Orchestrator', () => {
   });
 
   it('runs the example graph in the correct order with B/C in parallel', () => {
-    const defs: ModuleDefinition[] = [
+    const modules: Module[] = [
       makeDef('A', [], { durationMs: 10 }),
       makeDef('B', ['A'], { durationMs: 20 }),
       makeDef('C', ['A'], { durationMs: 10 }),
       makeDef('D', ['C'], { durationMs: 10 }),
       makeDef('E', ['B', 'D'], { durationMs: 10 }),
     ];
-    orchestrator.register(defs);
+    orchestrator.register(modules);
     orchestrator.run();
 
     expect(orchestrator.states().get('A')?.status).toBe('Running');
@@ -72,14 +72,14 @@ describe('Orchestrator', () => {
   });
 
   it('does not double-trigger E when B and D finish at the same time', () => {
-    const defs: ModuleDefinition[] = [
+    const modules: Module[] = [
       makeDef('A', [], { durationMs: 10 }),
       makeDef('B', ['A'], { durationMs: 10 }),
       makeDef('C', ['A'], { durationMs: 5 }),
       makeDef('D', ['C'], { durationMs: 5 }),
       makeDef('E', ['B', 'D'], { durationMs: 10 }),
     ];
-    orchestrator.register(defs);
+    orchestrator.register(modules);
     orchestrator.run();
 
     vi.advanceTimersByTime(10);
@@ -92,7 +92,7 @@ describe('Orchestrator', () => {
 
   it('isolates errors: blocks dependents while independent branches keep running, retry resumes the chain', () => {
     let cShouldFail = true;
-    const flakyC: ModuleDefinition = {
+    const flakyC: Module = {
       id: 'C',
       dependsOn: ['A'],
       execute: (): Observable<Result> =>
@@ -102,14 +102,14 @@ describe('Orchestrator', () => {
           ),
         ),
     };
-    const defs: ModuleDefinition[] = [
+    const modules: Module[] = [
       makeDef('A', [], { durationMs: 10 }),
       makeDef('B', ['A'], { durationMs: 10 }),
       flakyC,
       makeDef('D', ['C'], { durationMs: 10 }),
       makeDef('E', ['B', 'D'], { durationMs: 10 }),
     ];
-    orchestrator.register(defs);
+    orchestrator.register(modules);
     orchestrator.run();
 
     vi.advanceTimersByTime(10);
@@ -137,7 +137,7 @@ describe('Orchestrator', () => {
   });
 
   it('rejects registering an invalid graph', () => {
-    const defs: ModuleDefinition[] = [makeDef('A', ['B']), makeDef('B', ['A'])];
-    expect(() => orchestrator.register(defs)).toThrow();
+    const modules: Module[] = [makeDef('A', ['B']), makeDef('B', ['A'])];
+    expect(() => orchestrator.register(modules)).toThrow();
   });
 });

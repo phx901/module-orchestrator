@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { ModuleId } from '../../module-definition';
+import { ModuleId } from '../../module';
 import { ModuleStatus } from '../../module-state';
 import { Button } from '../../../ui/button/button';
 import { STATUS_CLASSES, STATUS_LABELS } from './module-status-display';

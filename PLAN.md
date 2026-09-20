@@ -62,7 +62,7 @@ die Reihenfolge angewiesen war.
 - `ModuleId`: string/enum-Identifier.
 - `ModuleStatus`: `Pending → Ready → Running → Completed | Failed`, plus `Blocked`
   (Vorgänger fehlgeschlagen).
-- `ModuleDefinition`: `{ id, dependsOn: ModuleId[], execute(inputs) => Observable<Result> }`.
+- `Module`: `{ id, dependsOn: ModuleId[], execute(inputs) => Observable<Result> }`.
   - `execute(inputs: Partial<Record<ModuleId, Result>>)` — die `inputs` enthalten
     die Ergebnisse der `dependsOn`-Module; `Partial<Record<...>>` macht die Nutzung
     typsicher, aber optional.
@@ -95,7 +95,7 @@ die Reihenfolge angewiesen war.
 1. **Scaffold** — `ng new` (standalone components, strict mode).
    Ordnerstruktur: `core/orchestrator`, `modules`, `ui`.
 2. **Domain-Modelle** — Typen für `ModuleId`, `ModuleStatus`,
-   `ModuleDefinition`, `ModuleState`, `Result`, Graph-Struktur.
+   `Module`, `ModuleState`, `Result`, Graph-Struktur.
 3. **Graph-Utilities** — Zyklus-Erkennung (DFS), Validierung,
    `getReadyModules(states)`. Reine, testbare Funktionen.
 4. **Orchestrator** — State-Verwaltung via Angular Signals,
@@ -117,7 +117,7 @@ Benennung nach aktuellem Angular Style Guide (v20+): **kein** `.service`/`.compo
 Suffix, Bindestriche, Dateiname = Klassenname, Organisation nach Feature/Thema.
 - `src/app/core/orchestrator/orchestrator.ts` — zentrale Steuerung (Klasse `Orchestrator`)
 - `src/app/core/orchestrator/graph.ts` — Zyklus-Erkennung, Ready-Ermittlung (reine Funktionen)
-- `src/app/core/orchestrator/module-definition.ts` — `ModuleId`, `ModuleStatus`, `ModuleState`, `ModuleDefinition`
+- `src/app/core/orchestrator/module.ts` — `ModuleId`, `ModuleStatus`, `ModuleState`, `Module`
 - `src/app/core/orchestrator/result.ts` — `Result`, `ResultStatus`
 - `src/app/core/compute/compute.ts` — simulierter Berechnungs-Service (Wartezeit pro Modul; später .NET-HTTP)
 - `src/app/modules/*` — konkrete Berechnungsmodule (nutzen den simulierten Service)
@@ -188,8 +188,8 @@ abgeschlossen und (wo möglich) verifizierbar.
 - [x] Verifikation: `ng serve` startet, Default-App lädt.
 
 ### Schritt 2 — Domain-Modelle
-- [x] `module-definition.ts`: `ModuleId`, `ModuleStatus` (Pending/Ready/Running/
-      Completed/Failed/Blocked), `ModuleState`, `ModuleDefinition`.
+- [x] `module.ts`: `ModuleId`, `ModuleStatus` (Pending/Ready/Running/
+      Completed/Failed/Blocked), `ModuleState`, `Module`.
 - [x] `result.ts`: `Result`, `ResultStatus` (`ok`/`warning`/`error`).
 - [x] `execute(inputs: Partial<Record<ModuleId, Result>>): Observable<Result>`.
 - [x] Verifikation: kompiliert ohne Fehler.
@@ -224,7 +224,7 @@ abgeschlossen und (wo möglich) verifizierbar.
       Parallelität B/C, Fehler-Isolation, Retry-Kette, kein Doppel-Trigger von E).
 
 ### Schritt 6 — Beispiel-Module A–E
-- [x] Je eine `ModuleDefinition` mit `dependsOn` gemäß Beispielgraph.
+- [x] Je eine `Module` mit `dependsOn` gemäß Beispielgraph.
 - [x] `execute()` ruft `Compute` mit modulspezifischer Wartezeit, mappt auf
       `Result` (`value` = modulspezifische Zusatzinfo).
 - [x] Zentrale Registrierung (Liste aller Definitionen).

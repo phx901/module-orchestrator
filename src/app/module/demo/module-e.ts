@@ -1,7 +1,7 @@
 import { Compute } from '../compute/compute';
-import { ModuleDefinition } from '../module-definition';
+import { Module } from '../module';
 
-export function createModuleE(compute: Compute): ModuleDefinition {
+export function createModuleE(compute: Compute): Module {
   return {
     id: 'E',
     dependsOn: ['D', 'C'],

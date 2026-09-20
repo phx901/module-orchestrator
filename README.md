@@ -35,10 +35,10 @@ npm run build
 ## Modul hinzufügen
 
 1. Neue Datei unter `src/app/modules/`, z.B. `module-f.ts`, mit einer
-   Funktion `createModuleF(compute: Compute): ModuleDefinition`:
+   Funktion `createModuleF(compute: Compute): Module`:
 
    ```ts
-   export function createModuleF(compute: Compute): ModuleDefinition {
+   export function createModuleF(compute: Compute): Module {
      return {
        id: 'F',
        dependsOn: ['E'],
@@ -64,6 +64,6 @@ späteres .NET-Backend:
   (`backendBaseUrl`, Dev) bzw. `environment.production.ts` (Prod-Build,
   über `fileReplacements` in `angular.json` aktiv).
 - Ein neuer Service kann `HttpClient` mit dieser Base-URL nutzen und die
-  `Compute`-Aufrufe in den Modulen ersetzen — das `ModuleDefinition`-Interface
+  `Compute`-Aufrufe in den Modulen ersetzen — das `Module`-Interface
   bleibt dabei unverändert (`execute()` gibt weiterhin ein `Observable<Result>`
   zurück).

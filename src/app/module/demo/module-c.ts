@@ -1,7 +1,7 @@
 import { Compute } from '../compute/compute';
-import { ModuleDefinition } from '../module-definition';
+import { Module } from '../module';
 
-export function createModuleC(compute: Compute): ModuleDefinition {
+export function createModuleC(compute: Compute): Module {
   let attempts = 0;
   return {
     id: 'C',

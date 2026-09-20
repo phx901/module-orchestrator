@@ -1,10 +1,10 @@
 import { of } from 'rxjs';
-import { detectCycle, getDependents, getReadyModules, validateGraph } from './scheduling';
+import { getDependents, getReadyModules } from './scheduling';
 import { ModuleState } from '../module/module-state';
-import { ModuleDefinition, ModuleId } from '../module/module-definition';
+import { Module, ModuleId } from '../module/module';
 import { Result } from '../module/result';
 
-function makeDef(id: ModuleId, dependsOn: ModuleId[] = []): ModuleDefinition {
+function makeDef(id: ModuleId, dependsOn: ModuleId[] = []): Module {
   return {
     id,
     dependsOn,
@@ -16,47 +16,13 @@ function makeStates(entries: Record<ModuleId, ModuleState['status']>): Map<Modul
   return new Map(Object.entries(entries).map(([id, status]) => [id, { status }]));
 }
 
-const exampleGraph: ModuleDefinition[] = [
+const exampleGraph: Module[] = [
   makeDef('A'),
   makeDef('B', ['A']),
   makeDef('C', ['A']),
   makeDef('D', ['C']),
   makeDef('E', ['B', 'D']),
 ];
-
-describe('detectCycle', () => {
-  it('returns null for the acyclic example graph', () => {
-    expect(detectCycle(exampleGraph)).toBeNull();
-  });
-
-  it('detects a direct cycle', () => {
-    const defs = [makeDef('A', ['B']), makeDef('B', ['A'])];
-    expect(detectCycle(defs)).toEqual(['A', 'B', 'A']);
-  });
-
-  it('detects an indirect cycle', () => {
-    const defs = [makeDef('A', ['B']), makeDef('B', ['C']), makeDef('C', ['A'])];
-    expect(detectCycle(defs)).toEqual(['A', 'B', 'C', 'A']);
-  });
-});
-
-describe('validateGraph', () => {
-  it('returns no errors for the valid example graph', () => {
-    expect(validateGraph(exampleGraph)).toEqual([]);
-  });
-
-  it('reports a missing dependency', () => {
-    const defs = [makeDef('A', ['Missing'])];
-    expect(validateGraph(defs)).toEqual([
-      'Module "A" depends on unknown module "Missing".',
-    ]);
-  });
-
-  it('reports a cycle', () => {
-    const defs = [makeDef('A', ['B']), makeDef('B', ['A'])];
-    expect(validateGraph(defs)).toEqual(['Cycle detected: A -> B -> A.']);
-  });
-});
 
 describe('getReadyModules', () => {
   it('returns the root module when nothing has run yet', () => {
