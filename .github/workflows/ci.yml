@@ -1,0 +1,38 @@
+name: Module Orchestrator CI
+
+on:
+  push:
+    branches:
+      - main
+      - "feature/**"
+      - "patch/**"
+      - "hotfix/**"
+      - "bugfix/**"
+      - "dependabot/**"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  versioning:
+    name: Semantic Versioning
+    uses: phx901/devops-kit/.github/workflows/semver-create.yml@v0.1.26
+
+  build:
+    name: Angular App
+    needs: versioning
+    uses: phx901/devops-kit/.github/workflows/angular-build.yml@v0.1.26
+    with:
+      working-directory: .
+      version: ${{ needs.versioning.outputs.version }}
+      test-args: "--no-watch"
+
+  tagging:
+    name: Git Tagging
+    needs: [build, versioning]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    uses: phx901/devops-kit/.github/workflows/semver-tag.yml@v0.1.26
+    permissions:
+      contents: write
+    with:
+      version: ${{ needs.versioning.outputs.version }}
