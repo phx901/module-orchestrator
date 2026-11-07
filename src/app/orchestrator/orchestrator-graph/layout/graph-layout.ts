@@ -1,17 +1,16 @@
-import { ModuleId } from '../../module/module';
+import { ModuleId } from '../../../module/module';
 
 export interface NodeLayout {
   id: ModuleId;
   x: number;
   y: number;
+  width: number;
 }
 
 export interface EdgeLayout {
   id: string;
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
+  fill: string;
+  outline: string;
 }
 
 export interface GraphLayout {
