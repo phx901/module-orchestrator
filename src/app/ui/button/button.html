@@ -1,0 +1,12 @@
+<button
+  type="button"
+  class="{{ classes() }}"
+  [disabled]="disabled()"
+>
+  @if (icon(); as iconName) {
+    <app-icon [name]="iconName" />
+  }
+  @if (label(); as labelText) {
+    <span>{{ labelText }}</span>
+  }
+</button>

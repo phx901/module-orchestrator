@@ -1,0 +1,5 @@
+<div class="min-w-44 min-h-24 rounded-lg border border-border bg-background overflow-hidden">
+  <app-module-header [id]="id()" [status]="status()" (retry)="onRetry()" />
+  <div class="border-t border-border-light"></div>
+  <app-module-content [state]="state()" />
+</div>
