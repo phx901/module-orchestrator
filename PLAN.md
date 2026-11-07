@@ -235,7 +235,7 @@ abgeschlossen und (wo möglich) verifizierbar.
       SVG-Pfeile nach `dependsOn`.
 - [x] `module-node`-Komponente: Kopfbereich (Name, Status-Farbe, Nachricht) +
       abgetrennter Infobereich (`result.value`) + Retry-Button bei `Failed`.
-- [ ] Verifikation: Statuswechsel/Nachrichten erscheinen live im Browser
+- [x] Verifikation: Statuswechsel/Nachrichten erscheinen live im Browser
       (folgt mit Schritt 8, da noch keine Seite die Komponente einbindet).
 
 ### Schritt 8 — Demo-Seite
