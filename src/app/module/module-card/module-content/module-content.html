@@ -1,7 +1,7 @@
 @if (message()) {
   <p class="px-2.5 py-2 text-xs text-text-muted">{{ message() }}</p>
 } @else {
-  <div class="px-2.5 py-2 text-xs text-text break-words">
+  <div class="px-2.5 py-2 text-xs text-text wrap-break-word">
     @if (value() !== undefined) {
       <span>{{ value() }}</span>
     } @else {

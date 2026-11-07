@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { Module, ModuleId } from '../../module/module';
+import { indexModulesById } from '../../module/module-utils';
 import { Orchestrator } from '../orchestrator';
 import { ModuleCard } from '../../module/module-card/module-card';
 import { NODE_WIDTH, NODE_HEIGHT, SPACING_X, SPACING_Y } from './graph-constants';
@@ -24,13 +25,15 @@ export class OrchestratorGraph {
 }
 
 function computeDepths(modules: Module[]): Map<ModuleId, number> {
-  const modulesById = new Map(modules.map((module) => [module.id, module]));
+  const modulesById = indexModulesById(modules);
   const depths = new Map<ModuleId, number>();
 
   function resolve(id: ModuleId): number {
     const cached = depths.get(id);
     if (cached !== undefined) return cached;
+
     const dependsOn = modulesById.get(id)?.dependsOn ?? [];
+    
     const depth = dependsOn.length > 0 ? Math.max(...dependsOn.map(resolve)) + 1 : 0;
     depths.set(id, depth);
     return depth;

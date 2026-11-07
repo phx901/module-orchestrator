@@ -1,4 +1,5 @@
 import { Module, ModuleId } from '../module';
+import { indexModulesById } from '../module-utils';
 
 export type Cycle = ModuleId[];
 
@@ -18,7 +19,7 @@ export function detectCycles(modules: Module[]): Cycle[] {
 
 function createSearchState(modules: Module[]): CycleSearchState {
   return {
-    modules: new Map(modules.map((module) => [module.id, module])),
+    modules: indexModulesById(modules),
     visited: new Set(),
     onPath: new Set(),
     path: [],

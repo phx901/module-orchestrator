@@ -6,6 +6,7 @@ import { validateModuleGraph } from '../module/graph-validation/module-graph-val
 import { countStatesWithStatus, hasStateWithStatus } from '../module/module-state-utils';
 import { ModuleState } from '../module/module-state';
 import { Module, ModuleId } from '../module/module';
+import { indexModulesById } from '../module/module-utils';
 import { Result } from '../module/result';
 
 @Injectable({ providedIn: 'root' })
@@ -13,9 +14,7 @@ export class Orchestrator {
   private readonly _modules = signal<Module[]>([]);
   private readonly _statesById = signal<Map<ModuleId, ModuleState>>(new Map());
   private readonly _resultsById = signal<Map<ModuleId, Result>>(new Map());
-  private readonly _modulesById = computed(
-    () => new Map(this._modules().map((module) => [module.id, module])),
-  );
+  private readonly _modulesById = computed(() => indexModulesById(this._modules()));
   private readonly trigger$ = new Subject<ModuleId>();
 
   readonly states = this._statesById.asReadonly();

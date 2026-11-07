@@ -16,7 +16,8 @@ export class App {
   private readonly compute = inject(Compute);
 
   constructor() {
-    this.orchestrator.register(createExampleModules(this.compute));
+    const exampleModules = createExampleModules(this.compute);
+    this.orchestrator.register(exampleModules);
   }
 
   protected start(): void {
