@@ -1,4 +1,5 @@
 import { Module, ModuleId } from '../../../module/module';
+import { Layers } from './graph-layout';
 
 /** Inclusive range of grid columns. */
 export interface Span {
@@ -10,7 +11,7 @@ type Spans = Map<ModuleId, Span>;
 
 const FALLBACK_SPAN: Span = { start: 0, end: 0 };
 
-export function computeSpans(layers: Module[][]): Spans {
+export function computeSpans(layers: Layers): Spans {
   const spans: Spans = new Map();
   layers.forEach((layer) => assignLayerSpans(layer, spans));
   widenRootsOverDependents(layers.flat(), spans);

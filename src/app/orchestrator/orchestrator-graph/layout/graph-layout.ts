@@ -1,4 +1,10 @@
-import { ModuleId } from '../../../module/module';
+import { Module, ModuleId } from '../../../module/module';
+
+/**
+ * Module, gruppiert in parallele Schichten.
+ * Jedes Modul in Schicht i hat alle Abhängigkeiten in Schichten < i.
+ */
+export type Layers = Module[][];
 
 export interface NodeLayout {
   id: ModuleId;

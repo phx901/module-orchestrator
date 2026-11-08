@@ -2,7 +2,7 @@ import { Module, ModuleId } from '../../../module/module';
 import { createArrow } from './graph-arrow';
 import { NODE_HEIGHT, NODE_WIDTH, SPACING_X, SPACING_Y } from './graph-constants';
 import { groupIntoLayers } from './graph-layers';
-import { EdgeLayout, GraphLayout, NodeLayout } from './graph-layout';
+import { EdgeLayout, GraphLayout, Layers, NodeLayout } from './graph-layout';
 import { computeSpans, Span, spanOrFallback } from './graph-spans';
 
 type NodesById = Map<ModuleId, NodeLayout>;
@@ -19,7 +19,7 @@ export function computeGraphLayout(modules: Module[]): GraphLayout {
   };
 }
 
-function createNodes(layers: Module[][]): NodeLayout[] {
+function createNodes(layers: Layers): NodeLayout[] {
   const spans = computeSpans(layers);
   return layers.flatMap((layer, layerIndex) =>
     layer.map((module) => createNode(module.id, spanOrFallback(spans, module.id), layerIndex)),
